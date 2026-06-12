@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jouvessence — Atelier charte graphique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --noir:#0E0D0B; --encre:#161410;
+    --or:#C9A14C; --or-clair:#E9CF92; --or-voile:rgba(201,161,76,.30);
+    --creme:#F1E9DA; --creme-2:#B9B09B;
+    --ok:#9CBF8E; --err:#C97B6B;
+    --serif:"Cormorant Garamond", Georgia, serif;
+    --sans:"Jost","Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--noir);color:var(--creme);font-family:var(--sans);font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .coffret{max-width:880px;margin:clamp(14px,3vw,44px) auto;padding:clamp(26px,6vw,64px) clamp(20px,6vw,72px);border:1px solid var(--or-voile);position:relative;}
+  .coffret::before{content:"";position:absolute;inset:7px;border:1px solid rgba(201,161,76,.14);pointer-events:none;}
+
+  .eyebrow{font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;color:var(--or);font-weight:400;}
+  .marque{font-size:.95rem;letter-spacing:.52em;text-transform:uppercase;color:var(--or);font-weight:400;margin-bottom:2.2rem;}
+  .marque::after{content:"";display:block;width:42px;height:1px;background:var(--or-voile);margin-top:14px;}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.9rem,4.8vw,3rem);line-height:1.15;color:var(--or-clair);margin:1rem 0 1.1rem;}
+  h1 em{font-style:italic;font-weight:400;}
+  .lede{color:var(--creme-2);max-width:60ch;}
+  .lede strong{color:var(--creme);font-weight:400;}
+
+  .filet{display:flex;align-items:center;gap:14px;margin:clamp(2.4rem,5vw,3.6rem) 0;color:var(--or);}
+  .filet::before,.filet::after{content:"";flex:1;height:1px;background:var(--or-voile);}
+  .filet span{font-size:.55rem;}
+
+  section h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.35rem,3vw,1.8rem);color:var(--or-clair);margin-bottom:.35rem;}
+  .aide{color:var(--creme-2);font-size:.95rem;max-width:58ch;margin-bottom:1.6rem;}
+  .aide strong{color:var(--creme);font-weight:400;}
+
+  /* Champs texte */
+  .champ{margin-bottom:1.2rem;max-width:480px;}
+  label{display:block;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--or);margin-bottom:.45rem;}
+  input[type=text],textarea{
+    width:100%;background:var(--encre);border:1px solid rgba(201,161,76,.22);
+    color:var(--creme);font-family:var(--sans);font-weight:300;font-size:1rem;
+    padding:.7rem .85rem;border-radius:0;
+  }
+  textarea{min-height:90px;resize:vertical;}
+  .champ-large{max-width:none;}
+  input:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--or);outline-offset:2px;}
+
+  /* Curseurs */
+  .axe{display:grid;grid-template-columns:1fr 2.2fr 1fr;align-items:center;gap:14px;padding:.85rem 0;border-top:1px solid rgba(201,161,76,.12);}
+  .axe:last-of-type{border-bottom:1px solid rgba(201,161,76,.12);}
+  .axe .pole{font-size:.92rem;color:var(--creme-2);}
+  .axe .pole.d{text-align:right;}
+  @media(max-width:560px){.axe{grid-template-columns:1fr;gap:6px;}.axe .pole.d{text-align:left;}}
+  input[type=range]{width:100%;accent-color:var(--or);background:transparent;height:24px;}
+
+  /* Tuiles directions */
+  .tuiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:1.3rem;}
+  .tuile{border:1px solid rgba(201,161,76,.2);background:var(--encre);display:flex;flex-direction:column;transition:border-color .2s;}
+  .tuile.is-retenue{border-color:var(--or);box-shadow:0 0 0 1px var(--or);}
+  .tuile.is-ecartee{opacity:.45;}
+  .apercu{height:120px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;position:relative;}
+  .ap-nom{font-size:1.45rem;line-height:1;}
+  .ap-sub{font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;}
+  .pastilles{position:absolute;bottom:9px;display:flex;gap:6px;}
+  .pastilles i{width:11px;height:11px;border-radius:50%;background:var(--c);border:1px solid rgba(0,0,0,.18);}
+  .ap-ecrin{background:#0E0D0B;border-bottom:1px solid rgba(201,161,76,.25);}
+  .ap-ecrin .ap-nom{font-family:var(--serif);color:#E9CF92;}
+  .ap-ecrin .ap-sub{color:#C9A14C;}
+  .ap-labo{background:#F7FAFB;}
+  .ap-labo .ap-nom{font-family:Inter,sans-serif;font-weight:300;color:#1C2B33;letter-spacing:.04em;}
+  .ap-labo .ap-sub{color:#5E8CA0;}
+  .ap-naturel{background:#F4ECDF;}
+  .ap-naturel .ap-nom{font-family:Fraunces,serif;color:#6B4A2F;}
+  .ap-naturel .ap-sub{color:#A9683F;}
+  .ap-minimal{background:#F4F2ED;}
+  .ap-minimal .ap-nom{font-family:var(--sans);font-weight:500;color:#141414;text-transform:uppercase;letter-spacing:.14em;font-size:1.1rem;}
+  .ap-minimal .ap-sub{color:#B0633B;}
+  .ap-eclat{background:linear-gradient(150deg,#FBF3E9,#F6E0D8);}
+  .ap-eclat .ap-nom{font-family:var(--serif);font-style:italic;color:#8C5A4F;}
+  .ap-eclat .ap-sub{color:#B98A4C;}
+  .tuile-corps{padding:.9rem 1rem 1rem;display:flex;flex-direction:column;gap:.35rem;flex:1;}
+  .tuile h3{font-family:var(--serif);font-weight:500;font-size:1.15rem;color:var(--creme);}
+  .tuile .adj{font-size:.85rem;color:var(--creme-2);flex:1;}
+  .tuile-actions{display:flex;gap:.5rem;margin-top:.7rem;}
+  .t-btn{flex:1;background:none;border:1px solid rgba(201,161,76,.3);color:var(--creme-2);font-family:var(--sans);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;padding:.45rem 0;cursor:pointer;}
+  .t-btn[aria-pressed="true"].retenir{background:var(--or);color:var(--noir);border-color:var(--or);font-weight:500;}
+  .t-btn[aria-pressed="true"].ecarter{border-color:var(--err);color:var(--err);}
+
+  /* Cartes typo */
+  .typos{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:1.3rem;}
+  .typo-carte{background:var(--encre);border:1px solid rgba(201,161,76,.2);padding:1.1rem 1.15rem 1.2rem;text-align:left;cursor:pointer;color:var(--creme);}
+  .typo-carte[aria-pressed="true"]{border-color:var(--or);box-shadow:0 0 0 1px var(--or);}
+  .typo-carte .grand{display:block;font-size:1.5rem;line-height:1.2;margin-bottom:.4rem;}
+  .typo-carte .petit{display:block;font-size:.88rem;color:var(--creme-2);margin-bottom:.7rem;}
+  .typo-carte .nom-typo{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--or);}
+  .ty-a .grand{font-family:var(--serif);font-weight:500;}
+  .ty-b .grand{font-family:Fraunces,serif;font-weight:600;}
+  .ty-b .petit{font-family:Inter,sans-serif;font-weight:300;}
+  .ty-c .grand{font-family:var(--sans);font-weight:500;text-transform:uppercase;letter-spacing:.12em;font-size:1.15rem;}
+  .ty-c .petit{font-family:Inter,sans-serif;font-weight:300;}
+
+  /* Cases & puces */
+  .cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.55rem .8rem;margin-bottom:1.1rem;}
+  .case{display:flex;align-items:center;gap:.6rem;font-size:.95rem;color:var(--creme-2);cursor:pointer;}
+  .case input{accent-color:var(--or);width:16px;height:16px;flex:none;}
+  .case input:checked + span{color:var(--creme);}
+
+  .puces{display:flex;flex-wrap:wrap;gap:.55rem;}
+  .puce{position:relative;background:none;border:1px solid rgba(201,161,76,.3);color:var(--creme-2);font-family:var(--sans);font-size:.9rem;padding:.45rem .9rem;cursor:pointer;}
+  .puce[aria-pressed="true"]{border-color:var(--or);color:var(--creme);background:rgba(201,161,76,.08);}
+  .puce .ord{display:none;position:absolute;top:-9px;right:-9px;width:20px;height:20px;border-radius:50%;background:var(--or);color:var(--noir);font-size:.72rem;font-weight:500;line-height:20px;text-align:center;}
+  .puce[data-ord] .ord{display:block;}
+
+  /* Génération & résultat */
+  .actions-fin{margin-top:1.4rem;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;}
+  .btn{background:var(--or);border:1px solid var(--or);color:var(--noir);font-family:var(--sans);font-weight:500;font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;padding:.85rem 1.6rem;cursor:pointer;}
+  .btn.secondaire{background:none;color:var(--or);}
+  .btn:disabled{opacity:.5;cursor:default;}
+  .msg{font-size:.92rem;color:var(--err);}
+  .msg.ok{color:var(--ok);}
+  #resultat{display:none;}
+  #resultat.visible{display:block;}
+  .brief-boite{background:var(--encre);border:1px solid var(--or-voile);padding:1.2rem 1.3rem;max-height:380px;overflow:auto;white-space:pre-wrap;font-family:Consolas,Menlo,monospace;font-size:.82rem;line-height:1.55;color:var(--creme-2);}
+  footer{margin-top:clamp(2.6rem,6vw,4rem);padding-top:1.4rem;border-top:1px solid rgba(201,161,76,.16);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--creme-2);text-align:center;line-height:2;}
+  footer .dore{color:var(--or);}
+  @media (prefers-reduced-motion:no-preference){
+    .hero{animation:lever .6s ease-out both;}
+    @keyframes lever{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  }
+</style>
+</head>
+<body>
+<main class="coffret">
+
+  <header class="hero">
+    <p class="marque">Jouvessence</p>
+    <p class="eyebrow">Atelier charte graphique · environ 5 minutes</p>
+    <h1>Dessinons <em>l'écrin</em> de Jouvessence.</h1>
+    <p class="lede">Pas de jargon, pas de bonne ou de mauvaise réponse&nbsp;: <strong>vos goûts et vos refus</strong> suffisent. Vos choix sont transmis directement à votre consultant et serviront de base à la nouvelle identité du site.</p>
+  </header>
+
+  <div class="filet" role="presentation"><span>◆</span></div>
+
+  <section aria-labelledby="s-id">
+    <h2 id="s-id">Qui répond&nbsp;?</h2>
+    <p class="aide">Si plusieurs personnes décident, chacun remplit de son côté — comparer les réponses fait partie de l'exercice.</p>
+    <div class="champ"><label for="nom">Prénom &amp; nom *</label><input type="text" id="nom" autocomplete="name"></div>
+    <div class="champ"><label for="role">Votre rôle chez Jouvessence</label><input type="text" id="role" placeholder="Fondateur, marketing…"></div>
+  </section>
+
+  <div class="filet" role="presentation"><span>◆</span></div>
+
+  <section aria-labelledby="s-ton">
+    <h2 id="s-ton">Le caractère de la marque</h2>
+    <p class="aide">Placez chaque curseur là où Jouvessence doit se situer — pas où elle est aujourd'hui, mais où vous voulez l'emmener.</p>
+    <div id="axes"></div>
+  </section>
+
+  <div class="filet" role="presentation"><span>◆</span></div>
+
+  <section aria-labelledby="s-dir">
+    <h2 id="s-dir">Les directions visuelles</h2>
+    <p class="aide"><strong>Retenez-en une ou deux</strong> qui vous attirent, et écartez celles qui ne ressemblent pas à Jouvessence. Fiez-vous à l'instinct.</p>
+    <div class="tuiles" id="tuiles">
+
+      <article class="tuile" data-dir="Écrin noir &amp; or">
+        <div class="apercu ap-ecrin"><span class="ap-nom">Jouvessence</span><span class="ap-sub">Sérum tenseur</span>
+          <div class="pastilles"><i style="--c:#0E0D0B"></i><i style="--c:#C9A14C"></i><i style="--c:#E9CF92"></i><i style="--c:#F1E9DA"></i></div>
+        </div>
+        <div class="tuile-corps"><h3>Écrin noir &amp; or</h3><p class="adj">Précieux · Intemporel · Haute parfumerie</p>
+          <div class="tuile-actions"><button type="button" class="t-btn retenir" aria-pressed="false">Retenir</button><button type="button" class="t-btn ecarter" aria-pressed="false">Écarter</button></div>
+        </div>
+      </article>
+
+      <article class="tuile" data-dir="Laboratoire lumineux">
+        <div class="apercu ap-labo"><span class="ap-nom">Jouvessence</span><span class="ap-sub">Soin expert</span>
+          <div class="pastilles"><i style="--c:#FFFFFF"></i><i style="--c:#DCE7EC"></i><i style="--c:#5E8CA0"></i><i style="--c:#1C2B33"></i></div>
+        </div>
+        <div class="tuile-corps"><h3>Laboratoire lumineux</h3><p class="adj">Scientifique · Pur · Dermo-cosmétique</p>
+          <div class="tuile-actions"><button type="button" class="t-btn retenir" aria-pressed="false">Retenir</button><button type="button" class="t-btn ecarter" aria-pressed="false">Écarter</button></div>
+        </div>
+      </article>
+
+      <article class="tuile" data-dir="Naturel solaire">
+        <div class="apercu ap-naturel"><span class="ap-nom">Jouvessence</span><span class="ap-sub">Beauté vivante</span>
+          <div class="pastilles"><i style="--c:#F4ECDF"></i><i style="--c:#A9683F"></i><i style="--c:#8A9B6E"></i><i style="--c:#6B4A2F"></i></div>
+        </div>
+        <div class="tuile-corps"><h3>Naturel solaire</h3><p class="adj">Chaleureux · Botanique · Authentique</p>
+          <div class="tuile-actions"><button type="button" class="t-btn retenir" aria-pressed="false">Retenir</button><button type="button" class="t-btn ecarter" aria-pressed="false">Écarter</button></div>
+        </div>
+      </article>
+
+      <article class="tuile" data-dir="Minimal contemporain">
+        <div class="apercu ap-minimal"><span class="ap-nom">Jouvessence</span><span class="ap-sub">Skincare studio</span>
+          <div class="pastilles"><i style="--c:#F4F2ED"></i><i style="--c:#141414"></i><i style="--c:#B0633B"></i><i style="--c:#CFCABE"></i></div>
+        </div>
+        <div class="tuile-corps"><h3>Minimal contemporain</h3><p class="adj">Épuré · Direct · Galerie</p>
+          <div class="tuile-actions"><button type="button" class="t-btn retenir" aria-pressed="false">Retenir</button><button type="button" class="t-btn ecarter" aria-pressed="false">Écarter</button></div>
+        </div>
+      </article>
+
+      <article class="tuile" data-dir="Éclat poudré">
+        <div class="apercu ap-eclat"><span class="ap-nom">Jouvessence</span><span class="ap-sub">Lumière &amp; glow</span>
+          <div class="pastilles"><i style="--c:#FBF3E9"></i><i style="--c:#F0CFC4"></i><i style="--c:#B98A4C"></i><i style="--c:#8C5A4F"></i></div>
+        </div>
+        <div class="tuile-corps"><h3>Éclat poudré</h3><p class="adj">Lumineux · Doux · Féminin</p>
+          <div class="tuile-actions"><button type="button" class="t-btn retenir" aria-pressed="false">Retenir</button><button type="button" class="t-btn ecarter" aria-pressed="false">Écarter</button></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <div class="filet" role="presentation"><span>◆</span></div>
+
+  <section aria-labelledby="s-typo">
+    <h2 id="s-typo">L'écriture</h2>
+    <p class="aide">Trois manières d'écrire le même message. Laquelle sonne le plus juste pour Jouvessence&nbsp;?</p>
+    <div class="typos" id="typos">
+      <button type="button" class="typo-carte ty-a" data-typo="Haute parfumerie — serif élégante + géométrique" aria-pressed="false">
+        <span class="grand">Rendez dix ans à votre peau.</span>
+        <span class="petit">Un geste, trois minutes, et le regard s'illumine.</span>
+        <span class="nom-typo">Haute parfumerie</span>
+      </button>
+      <button type="button" class="typo-carte ty-b" data-typo="Éditorial moderne — serif de caractère + sans sobre" aria-pressed="false">
+        <span class="grand">Rendez dix ans à votre peau.</span>
+        <span class="petit">Un geste, trois minutes, et le regard s'illumine.</span>
+        <span class="nom-typo">Éditorial moderne</span>
+      </button>
+      <button type="button" class="typo-carte ty-c" data-typo="Épuré géométrique — capitales espacées + sans légère" aria-pressed="false">
+        <span class="grand">Rendez dix ans à votre peau.</span>
+        <span class="petit">Un geste, trois minutes, et le regard s'illumine.</span>
+        <span class="nom-typo">Épuré géométrique</span>
+      </button>
+    </div>
+  </section>
+
+  <div class="filet" role="presentation"><span>◆</span></div>
+
+  <section aria-labelledby="s-anti">
+    <h2 id="s-anti">Ce que vous ne voulez plus voir</h2>
+    <p class="aide">Cochez tout ce qui doit disparaître du futur site. Soyez sans pitié.</p>
+    <div class="cases" id="antis">
+      <label class="case"><input type="checkbox" value="Compteurs et promos clignotantes"><span>Compteurs et promos clignotantes</span></label>
+      <label class="case"><input type="checkbox" value="Phrases en majuscules"><span>PHRASES EN MAJUSCULES</span></label>
+      <label class="case"><input type="checkbox" value="Murs d'emojis"><span>Murs d'emojis</span></label>
+      <label class="case"><input type="checkbox" value="Pop-ups à l'arrivée"><span>Pop-ups à l'arrivée</span></label>
+      <label class="case"><input type="checkbox" value="Photos de banque d'images"><span>Photos de banque d'images</span></label>
+      <label class="case"><input type="checkbox" value="Superlatifs invérifiables"><span>Superlatifs («&nbsp;le meilleur au monde&nbsp;»)</span></label>
+      <label class="case"><input type="checkbox" value="Pages interminables"><span>Pages interminables</span></label>
+      <label class="case"><input type="checkbox" value="Avis qui semblent fabriqués"><span>Avis qui semblent fabriqués</span></label>
+    </div>
+    <div class="champ champ-large"><label for="anti-libre">Autre chose à bannir&nbsp;?</label><input type="text" id="anti-libre"></div>
+  </section>
+
+  <div class="filet" role="presentation"><span>◆</span></div>
+
+  <section aria-labelledby="s-preuves">
+    <h2 id="s-preuves">Vos preuves, dans l'ordre</h2>
+    <p class="aide">Cliquez sur ce qui doit convaincre un visiteur, <strong>dans l'ordre d'importance</strong> — le premier clic devient la preuve n°1.</p>
+    <div class="puces" id="preuves">
+      <button type="button" class="puce" aria-pressed="false">Avant / après réels</button>
+      <button type="button" class="puce" aria-pressed="false">Vidéos de démonstration</button>
+      <button type="button" class="puce" aria-pressed="false">Avis clients vérifiés</button>
+      <button type="button" class="puce" aria-pressed="false">Brevet français</button>
+      <button type="button" class="puce" aria-pressed="false">Fabrication française</button>
+      <button type="button" class="puce" aria-pressed="false">Test dermatologique</button>
+      <button type="button" class="puce" aria-pressed="false">Démonstrations en direct (lives)</button>
+      <button type="button" class="puce" aria-pressed="false">Satisfait ou remboursé</button>
+    </div>
+  </section>
+
+  <div class="filet" role="presentation"><span>◆</span></div>
+
+  <section aria-labelledby="s-prio">
+    <h2 id="s-prio">Vos trois priorités</h2>
+    <p class="aide">Le futur site ne peut pas tout faire en même temps. Choisissez-en trois, maximum.</p>
+    <div class="puces" id="prios">
+      <button type="button" class="puce" aria-pressed="false">Rassurer et crédibiliser</button>
+      <button type="button" class="puce" aria-pressed="false">Vendre plus, plus vite</button>
+      <button type="button" class="puce" aria-pressed="false">Construire une marque durable</button>
+      <button type="button" class="puce" aria-pressed="false">Séduire presse et revendeurs</button>
+      <button type="button" class="puce" aria-pressed="false">Assumer le premium (prix)</button>
+      <button type="button" class="puce" aria-pressed="false">Élargir la clientèle</button>
+    </div>
+  </section>
+
+  <div class="filet" role="presentation"><span>◆</span></div>
+
+  <section aria-labelledby="s-libre">
+    <h2 id="s-libre">À vous</h2>
+    <div class="champ champ-large"><label for="admire">Une marque ou un site que vous admirez (même hors cosmétique) — et pourquoi</label><textarea id="admire"></textarea></div>
+    <div class="champ champ-large"><label for="reste">Tout ce qu'on ne vous a pas demandé</label><textarea id="reste"></textarea></div>
+
+    <div class="actions-fin">
+      <button type="button" class="btn" id="generer">Générer mon brief</button>
+      <span class="msg" id="msg-valid" role="status"></span>
+    </div>
+  </section>
+
+  <div id="resultat" aria-live="polite">
+    <div class="filet" role="presentation"><span>◆</span></div>
+    <h2>Votre brief est prêt</h2>
+    <p class="aide" id="aide-envoi">Cliquez sur «&nbsp;Envoyer&nbsp;» — votre consultant le reçoit immédiatement.</p>
+    <div class="brief-boite" id="brief"></div>
+    <div class="actions-fin">
+      <button type="button" class="btn" id="envoyer">Envoyer à mon consultant</button>
+      <button type="button" class="btn secondaire" id="copier">Copier</button>
+      <button type="button" class="btn secondaire" id="telecharger">Télécharger</button>
+      <span class="msg" id="msg-envoi" role="status"></span>
+    </div>
+  </div>
+
+  <footer>
+    <span class="dore">◆</span><br>
+    Atelier préparé pour Jouvessence · Vos réponses ne sont partagées qu'avec votre consultant
+  </footer>
+
+</main>
+
+<script>
+/* ============================================================
+   CONFIGURATION — remplacer VOTRE_ID par l'identifiant Formspree
+   (formspree.io → New Form → copier l'ID, ex. https://formspree.io/f/mqkvabcd)
+   ============================================================ */
+const FORM_ENDPOINT = "https://formspree.io/f/mqeoyryz";
+
+/* ----- Curseurs ----- */
+const AXES = [
+  {id:"lux",    g:"Accessible",    d:"Luxe"},
+  {id:"sci",    g:"Scientifique",  d:"Sensoriel"},
+  {id:"voix",   g:"Discret",       d:"Affirmé"},
+  {id:"temps",  g:"Héritage",      d:"Avant-garde"},
+  {id:"energie",g:"Douceur",       d:"Énergie"}
+];
+const axesHote = document.getElementById("axes");
+AXES.forEach(a=>{
+  const row = document.createElement("div");
+  row.className = "axe";
+  row.innerHTML =
+    '<span class="pole">'+a.g+'</span>'+
+    '<input type="range" min="0" max="100" value="50" id="axe-'+a.id+'" aria-label="'+a.g+' ou '+a.d+'">'+
+    '<span class="pole d">'+a.d+'</span>';
+  axesHote.appendChild(row);
+});
+function lireAxe(a){
+  const v = +document.getElementById("axe-"+a.id).value;
+  if (v <= 42) return a.g + " (" + (100-v) + "/100)";
+  if (v >= 58) return a.d + " (" + v + "/100)";
+  return "Équilibre " + a.g + " / " + a.d;
+}
+
+/* ----- Tuiles : retenir (max 2) / écarter ----- */
+const retenues = [];
+document.querySelectorAll(".tuile").forEach(t=>{
+  const nom = t.dataset.dir;
+  const bR = t.querySelector(".retenir"), bE = t.querySelector(".ecarter");
+  bR.addEventListener("click", ()=>{
+    const actif = bR.getAttribute("aria-pressed")==="true";
+    if (actif){
+      bR.setAttribute("aria-pressed","false");
+      t.classList.remove("is-retenue");
+      retenues.splice(retenues.indexOf(nom),1);
+    } else {
+      if (retenues.length >= 2){ signaler("Deux directions maximum — libérez-en une d'abord."); return; }
+      bR.setAttribute("aria-pressed","true");
+      bE.setAttribute("aria-pressed","false");
+      t.classList.add("is-retenue"); t.classList.remove("is-ecartee");
+      retenues.push(nom);
+    }
+    signaler("");
+  });
+  bE.addEventListener("click", ()=>{
+    const actif = bE.getAttribute("aria-pressed")==="true";
+    bE.setAttribute("aria-pressed", actif ? "false" : "true");
+    t.classList.toggle("is-ecartee", !actif);
+    if (!actif){
+      bR.setAttribute("aria-pressed","false");
+      t.classList.remove("is-retenue");
+      const i = retenues.indexOf(nom); if (i>-1) retenues.splice(i,1);
+    }
+  });
+});
+
+/* ----- Typo : choix unique ----- */
+let typoChoisie = null;
+document.querySelectorAll(".typo-carte").forEach(c=>{
+  c.addEventListener("click", ()=>{
+    document.querySelectorAll(".typo-carte").forEach(x=>x.setAttribute("aria-pressed","false"));
+    c.setAttribute("aria-pressed","true");
+    typoChoisie = c.dataset.typo;
+  });
+});
+
+/* ----- Puces : preuves (ordre de clic) & priorités (max 3) ----- */
+const preuves = [], prios = [];
+function renum(hoteId, liste){
+  document.querySelectorAll("#"+hoteId+" .puce").forEach(p=>{
+    const i = liste.indexOf(p.firstChild.textContent.trim());
+    const badge = p.querySelector(".ord");
+    if (i>-1){ p.dataset.ord=""; badge.textContent = i+1; }
+    else { delete p.dataset.ord; badge.textContent=""; }
+  });
+}
+document.querySelectorAll("#preuves .puce").forEach(p=>{
+  p.insertAdjacentHTML("beforeend",'<span class="ord" aria-hidden="true"></span>');
+  p.addEventListener("click", ()=>{
+    const txt = p.firstChild.textContent.trim();
+    const i = preuves.indexOf(txt);
+    if (i>-1){ preuves.splice(i,1); p.setAttribute("aria-pressed","false"); }
+    else { preuves.push(txt); p.setAttribute("aria-pressed","true"); }
+    renum("preuves", preuves);
+  });
+});
+document.querySelectorAll("#prios .puce").forEach(p=>{
+  p.addEventListener("click", ()=>{
+    const txt = p.textContent.trim();
+    const i = prios.indexOf(txt);
+    if (i>-1){ prios.splice(i,1); p.setAttribute("aria-pressed","false"); }
+    else {
+      if (prios.length>=3){ signaler("Trois priorités maximum."); return; }
+      prios.push(txt); p.setAttribute("aria-pressed","true");
+    }
+    signaler("");
+  });
+});
+
+/* ----- Validation & génération ----- */
+const msgValid = document.getElementById("msg-valid");
+function signaler(t){ msgValid.textContent = t; }
+function val(id){ return document.getElementById(id).value.trim(); }
+
+function construireBrief(){
+  const nom = val("nom"), role = val("role");
+  const antis = [...document.querySelectorAll("#antis input:checked")].map(c=>c.value);
+  if (val("anti-libre")) antis.push(val("anti-libre"));
+  const ecartees = [...document.querySelectorAll(".tuile .ecarter[aria-pressed='true']")]
+    .map(b=>b.closest(".tuile").dataset.dir);
+  const d = new Date().toLocaleDateString("fr-FR");
+
+  let md = "# Brief charte graphique — Jouvessence\n";
+  md += "Rempli par : " + nom + (role ? " ("+role+")" : "") + " — " + d + "\n\n";
+  md += "## Caractère de marque\n";
+  AXES.forEach(a=>{ md += "- " + a.g + " ↔ " + a.d + " : " + lireAxe(a) + "\n"; });
+  md += "\n## Directions visuelles\n";
+  md += "- Retenues : " + (retenues.join(" · ") || "—") + "\n";
+  md += "- Écartées : " + (ecartees.join(" · ") || "—") + "\n";
+  md += "\n## Écriture\n- " + (typoChoisie || "—") + "\n";
+  md += "\n## À bannir\n" + (antis.length ? antis.map(a=>"- "+a).join("\n") : "- —") + "\n";
+  md += "\n## Preuves, par ordre d'importance\n" + (preuves.length ? preuves.map((p,i)=>(i+1)+". "+p).join("\n") : "—") + "\n";
+  md += "\n## Priorités (3 max)\n" + (prios.length ? prios.map(p=>"- "+p).join("\n") : "- —") + "\n";
+  md += "\n## Références & remarques\n";
+  md += "- Marque/site admiré : " + (val("admire") || "—") + "\n";
+  md += "- Remarques libres : " + (val("reste") || "—") + "\n";
+  return md;
+}
+
+const resultat = document.getElementById("resultat");
+const briefBoite = document.getElementById("brief");
+let briefCourant = "";
+
+document.getElementById("generer").addEventListener("click", ()=>{
+  if (!val("nom")) { signaler("Votre nom est nécessaire pour identifier le brief."); document.getElementById("nom").focus(); return; }
+  if (!retenues.length){ signaler("Retenez au moins une direction visuelle."); return; }
+  signaler("");
+  briefCourant = construireBrief();
+  briefBoite.textContent = briefCourant;
+  resultat.classList.add("visible");
+  resultat.scrollIntoView({behavior:"smooth"});
+});
+
+/* ----- Envoi / copie / téléchargement ----- */
+const msgEnvoi = document.getElementById("msg-envoi");
+const btnEnvoyer = document.getElementById("envoyer");
+const endpointOk = !FORM_ENDPOINT.includes("VOTRE_ID");
+if (!endpointOk){
+  btnEnvoyer.style.display = "none";
+  document.getElementById("aide-envoi").textContent =
+    "Copiez le brief et envoyez-le à votre consultant par WhatsApp ou email.";
+}
+
+btnEnvoyer.addEventListener("click", async ()=>{
+  btnEnvoyer.disabled = true;
+  msgEnvoi.className = "msg"; msgEnvoi.textContent = "Envoi en cours…";
+  try{
+    const r = await fetch(FORM_ENDPOINT,{
+      method:"POST",
+      headers:{ "Accept":"application/json", "Content-Type":"application/json" },
+      body: JSON.stringify({ _subject:"Brief Jouvessence — "+val("nom"), nom:val("nom"), role:val("role"), brief:briefCourant })
+    });
+    if (r.ok){ msgEnvoi.className="msg ok"; msgEnvoi.textContent="Envoyé — merci ! Votre consultant revient vers vous très vite."; }
+    else { throw new Error("HTTP "+r.status); }
+  }catch(e){
+    btnEnvoyer.disabled = false;
+    msgEnvoi.className = "msg";
+    msgEnvoi.textContent = "L'envoi a échoué — utilisez « Copier » et transmettez le brief par WhatsApp.";
+  }
+});
+
+document.getElementById("copier").addEventListener("click", async ()=>{
+  try{
+    await navigator.clipboard.writeText(briefCourant);
+    msgEnvoi.className="msg ok"; msgEnvoi.textContent="Brief copié.";
+  }catch(e){
+    const ta=document.createElement("textarea"); ta.value=briefCourant; document.body.appendChild(ta);
+    ta.select(); document.execCommand("copy"); ta.remove();
+    msgEnvoi.className="msg ok"; msgEnvoi.textContent="Brief copié.";
+  }
+});
+
+document.getElementById("telecharger").addEventListener("click", ()=>{
+  const slug = (val("nom")||"jouvessence").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-");
+  const blob = new Blob([briefCourant], {type:"text/markdown;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "brief-jouvessence-"+slug+".md";
+  a.click(); URL.revokeObjectURL(a.href);
+});
+</script>
+</body>
+</html>
